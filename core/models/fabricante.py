@@ -1,10 +1,13 @@
 from django.db import models
 
-# Create your models here.
 class Fabricante(models.Model):
-    Fabricante = models.CharField(null=False, max_length=100)
+    nome = models.CharField(max_length=100)
     criado_em = models.DateTimeField(auto_now_add=True)
     alterado_em = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = 'Fabricante'
+        verbose_name_plural = 'Fabricantes'
+
     def __str__(self):
-        return '{}'.format(self.Fabricante)
+        return self.nome
