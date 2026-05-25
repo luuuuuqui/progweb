@@ -27,10 +27,15 @@
                 <div class="col-sm-10">
                     {% if produto.foto %}
                     <div class="mb-2">
-                        <img src="{{ produto.foto.url }}" alt="{{ produto.nome }}" style="max-height: 120px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.12);">
+                        <small class="text-muted d-block mb-1">Imagem atual:</small>
+                        <img id="fotoAtual" src="{{ produto.foto.url }}" alt="{{ produto.nome }}" style="max-height: 120px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.12);">
                     </div>
                     {% endif %}
-                    <input type="file" class="form-control-file mt-2" id="foto" name="foto" accept="image/*">
+                    <div id="novaFotoPreview" class="mb-2" style="display: none;">
+                        <small class="text-success d-block mb-1"><i class="fa fa-arrow-right"></i> Nova imagem:</small>
+                        <img id="novaFotoImg" src="" alt="Preview" style="max-height: 120px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); border: 2px solid #28a745;">
+                    </div>
+                    <input type="file" class="form-control-file mt-2" id="foto" name="foto" accept="image/*" onchange="previewNovaFoto(this)">
                     {% if produto.foto %}
                         <small class="form-text text-muted">Imagem atual: <a href="{{ produto.foto.url }}" target="_blank">{{ produto.foto.name }}</a></small>
                     {% endif %}
@@ -98,4 +103,24 @@
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function previewNovaFoto(input) {
+    var preview = document.getElementById('novaFotoPreview');
+    var img = document.getElementById('novaFotoImg');
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        preview.style.display = 'none';
+        img.src = '';
+    }
+}
+</script>
 {% endblock %}
