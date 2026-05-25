@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Categorias{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0 text-dark font-weight-bold">Gerenciamento de Categorias</h2>
+            <a href="{% url 'create_categoria' %}" class="btn btn-success font-weight-bold px-4 py-2 shadow-sm">
+                <i class="fa fa-plus mr-1"></i> Nova Categoria
+            </a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 text-secondary">Categorias Cadastradas [{{ categorias | length }}]</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="pl-4">ID</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Data de Criação</th>
+                                <th scope="col">Última Alteração</th>
+                                <th scope="col" class="text-right pr-4">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cat in categorias %}
+                            <tr>
+                                <th scope="row" class="align-middle pl-4">{{ cat.id }}</th>
+                                <td class="align-middle font-weight-bold">{{ cat.nome }}</td>
+                                <td class="align-middle text-muted">{{ cat.criado_em|date:"d/m/Y H:i" }}</td>
+                                <td class="align-middle text-muted">{{ cat.alterado_em|date:"d/m/Y H:i" }}</td>
+                                <td class="align-middle text-right pr-4">
+                                    <a href="{% url 'edit_categoria' cat.id %}" class="btn btn-sm btn-warning text-white mr-1 shadow-sm">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </a>
+                                    <a href="{% url 'delete_categoria' cat.id %}" class="btn btn-sm btn-danger shadow-sm" onclick="return confirm('Tem certeza que deseja apagar a categoria {{ cat.nome }}?');">
+                                        <i class="fa fa-trash"></i> Apagar
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">
+                                    <i class="fa fa-info-circle fa-2x mb-2 d-block"></i>
+                                    Nenhuma categoria cadastrada no momento.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

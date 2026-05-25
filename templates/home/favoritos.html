@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Favoritos{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Meus Favoritos</h3>
+                <hr>
+            </div>
+        </div>
+        {% if produtos %}
+        <div class="alert alert-info">Você tem {{ produtos | length }} produto(s) favoritado(s)</div>
+        <div class="row">
+            {% for prod in produtos %}
+            <div class="col-12 col-md-6 col-lg-6 mb-4">
+                <div class="card w-100">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-4">
+                            <div class="image-product" style="background-image: url('{% if prod.foto %}{{ prod.foto.url }}{% endif %}');"></div>
+                        </div>
+                        <div class="col-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{prod.nome}}</h5>
+                                <div class="mt-2">
+                                    <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary"><i class="fa fa-search"></i> Ver</a>
+                                    <button class="btn btn-warning btn-favorite" data-id="{{ prod.id }}"><i class="fa fa-heart"></i> <span class="fav-text">Favoritar</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning">Você não tem nenhum produto favoritado no momento.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

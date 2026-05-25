@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Produtos{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0 text-dark font-weight-bold">Gerenciamento de Produtos</h2>
+            <a href="{% url 'create_produto' %}" class="btn btn-success font-weight-bold px-4 py-2 shadow-sm">
+                <i class="fa fa-plus mr-1"></i> Novo Produto
+            </a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 text-secondary">Produtos Cadastrados [{{ produtos | length }}]</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="pl-4">ID</th>
+                                <th scope="col">Imagem</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Preço</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Fabricante</th>
+                                <th scope="col" class="text-right pr-4">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for prod in produtos %}
+                            <tr>
+                                <th scope="row" class="align-middle pl-4">{{ prod.id }}</th>
+                                <td class="align-middle">
+                                    {% if prod.foto %}
+                                    <img src="{{ prod.foto.url }}" alt="{{ prod.nome }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;">
+                                    {% else %}
+                                    <span class="text-muted"><i class="fa fa-image"></i></span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle font-weight-bold">{{ prod.nome }}</td>
+                                <td class="align-middle text-primary font-weight-bold">R$ {{ prod.preco }}</td>
+                                <td class="align-middle">
+                                    {% if prod.categoria %}
+                                    <span class="badge badge-secondary py-1 px-2">{{ prod.categoria.nome }}</span>
+                                    {% else %}
+                                    <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle">
+                                    {% if prod.fabricante %}
+                                    <span class="badge badge-info py-1 px-2">{{ prod.fabricante.nome }}</span>
+                                    {% else %}
+                                    <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle text-right pr-4">
+                                    <a href="{% url 'details_produto' prod.id %}" class="btn btn-sm btn-primary mr-1 shadow-sm">
+                                        <i class="fa fa-search"></i> Ver
+                                    </a>
+                                    <a href="{% url 'edit_produto' prod.id %}" class="btn btn-sm btn-warning text-white mr-1 shadow-sm">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </a>
+                                    <a href="{% url 'delete_produto' prod.id %}" class="btn btn-sm btn-danger shadow-sm" onclick="return confirm('Tem certeza que deseja apagar o produto {{ prod.nome }}?');">
+                                        <i class="fa fa-trash"></i> Apagar
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-5 text-muted">
+                                    <i class="fa fa-info-circle fa-2x mb-2 d-block"></i>
+                                    Nenhum produto cadastrado no momento.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

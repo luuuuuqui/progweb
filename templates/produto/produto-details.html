@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Detalhes do Produto{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="container py-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">{{ produto.nome }}</h3>
+                <span class="badge badge-light px-3 py-2" style="font-size: 1.1rem;">R$ {{ produto.preco }}</span>
+            </div>
+            <div class="card-body">
+                {% if produto.foto %}
+                <div class="text-center mb-4">
+                    <img src="{{ produto.foto.url }}" alt="{{ produto.nome }}" style="max-height: 250px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                </div>
+                {% endif %}
+
+                <div class="row mb-3">
+                    <div class="col-md-3 font-weight-bold">ID do Produto:</div>
+                    <div class="col-md-9">{{ produto.id }}</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-3 font-weight-bold">Categoria:</div>
+                    <div class="col-md-9">
+                        {% if produto.categoria %}
+                            <span class="badge badge-secondary py-2 px-3">{{ produto.categoria.nome }}</span>
+                        {% else %}
+                            <span class="text-muted">Nenhuma</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3 font-weight-bold">Fabricante:</div>
+                    <div class="col-md-9">
+                        {% if produto.fabricante %}
+                            <span class="badge badge-info py-2 px-3">{{ produto.fabricante.nome }}</span>
+                        {% else %}
+                            <span class="text-muted">Nenhum</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3 font-weight-bold">Status:</div>
+                    <div class="col-md-9">
+                        {% if produto.destaque %}
+                            <span class="badge badge-success py-1 px-2 mr-2"><i class="fa fa-star"></i> Destaque</span>
+                        {% endif %}
+                        {% if produto.promocao %}
+                            <span class="badge badge-warning py-1 px-2"><i class="fa fa-tag"></i> Em Promoção</span>
+                        {% endif %}
+                        {% if not produto.destaque and not produto.promocao %}
+                            <span class="text-muted">Padrão</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if produto.promocao and produto.msg_promocao %}
+                <div class="row mb-3">
+                    <div class="col-md-3 font-weight-bold">Mensagem de Promoção:</div>
+                    <div class="col-md-9 text-danger font-italic font-weight-bold">
+                        "{{ produto.msg_promocao }}"
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer bg-light d-flex">
+                <a href="{% url 'edit_produto' produto.id %}" class="btn btn-warning mr-2">
+                    <i class="fa fa-edit"></i> Editar
+                </a>
+                <a href="{% url 'delete_produto' produto.id %}" class="btn btn-danger mr-auto" onclick="return confirm('Tem certeza que deseja apagar este produto?');">
+                    <i class="fa fa-trash"></i> Apagar
+                </a>
+                <a href="{% url 'produto' %}" class="btn btn-secondary">
+                    <i class="fa fa-rotate-left"></i> Retornar para Lista
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
