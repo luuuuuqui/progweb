@@ -30,7 +30,7 @@
                     <div class="col-md-3 font-weight-bold">Categoria:</div>
                     <div class="col-md-9">
                         {% if produto.categoria %}
-                            <span class="badge badge-secondary py-2 px-3">{{ produto.categoria.nome }}</span>
+                            <span class="badge badge-secondary py-1 px-2">{{ produto.categoria.nome }}</span>
                         {% else %}
                             <span class="text-muted">Nenhuma</span>
                         {% endif %}
@@ -41,7 +41,7 @@
                     <div class="col-md-3 font-weight-bold">Fabricante:</div>
                     <div class="col-md-9">
                         {% if produto.fabricante %}
-                            <span class="badge badge-info py-2 px-3">{{ produto.fabricante.nome }}</span>
+                            <span class="badge badge-info py-1 px-2">{{ produto.fabricante.nome }}</span>
                         {% else %}
                             <span class="text-muted">Nenhum</span>
                         {% endif %}
@@ -67,7 +67,7 @@
                 <div class="row mb-3">
                     <div class="col-md-3 font-weight-bold">Mensagem de Promoção:</div>
                     <div class="col-md-9 text-danger font-italic font-weight-bold">
-                        "{{ produto.msg_promocao }}"
+                        {{ produto.msg_promocao }}
                     </div>
                 </div>
                 {% endif %}
