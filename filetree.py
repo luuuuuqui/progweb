@@ -1,18 +1,16 @@
-import os
-import fnmatch
 import argparse
+import fnmatch
 from pathlib import Path
-from typing import List, Tuple, Optional, Set
 
 
 class DirectoryTreeGenerator:
-    """Generates a visual representation of the directory tree, respecting .gitignore."""
+    """Generates a directory tree while respecting .gitignore."""
 
     def __init__(
         self,
         root_dir: str = ".",
-        output_file: Optional[str] = None,
-        max_depth: Optional[int] = None,
+        output_file: str | None = None,
+        max_depth: int | None = None,
     ):
         self.root_dir = Path(root_dir).resolve()
         self.output_file = output_file
@@ -25,7 +23,7 @@ class DirectoryTreeGenerator:
         self.space_prefix = "   "
 
         # Using set for O(1) lookup
-        self.ignore_names: Set[str] = {
+        self.ignore_names: set[str] = {
             ".git",
             "__pycache__",
             "migrations",
@@ -36,7 +34,7 @@ class DirectoryTreeGenerator:
         }
         self.ignore_rules = self._load_gitignore()
 
-    def _load_gitignore(self) -> List[Tuple[str, bool]]:
+    def _load_gitignore(self) -> list[tuple[str, bool]]:
         """Reads and processes .gitignore file rules, if it exists."""
         gitignore_path = self.root_dir / ".gitignore"
         if not gitignore_path.exists():
@@ -108,7 +106,7 @@ class DirectoryTreeGenerator:
             print(f"\n[+] Directory structure saved to: '{self.output_file}'")
 
     def _generate_tree_recursive(
-        self, directory: Path, prefix: List[str], output: List[str], current_depth: int
+        self, directory: Path, prefix: list[str], output: list[str], current_depth: int
     ) -> None:
         """Recursively traverses directories building the tree lines."""
         if self.max_depth is not None and current_depth >= self.max_depth:

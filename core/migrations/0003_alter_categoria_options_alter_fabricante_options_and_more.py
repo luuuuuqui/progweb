@@ -17,7 +17,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name='fabricante',
-            options={'verbose_name': 'Fabricante', 'verbose_name_plural': 'Fabricantes'},
+            options={
+                'verbose_name': 'Fabricante',
+                'verbose_name_plural': 'Fabricantes',
+            },
         ),
         migrations.AlterModelOptions(
             name='produto',
@@ -50,7 +53,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='produto',
             name='categoria',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='produtos', to='core.categoria'),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name='produtos',
+                to='core.categoria',
+            ),
         ),
         migrations.AlterField(
             model_name='produto',
@@ -60,7 +69,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='produto',
             name='fabricante',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='produtos', to='core.fabricante'),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name='produtos',
+                to='core.fabricante',
+            ),
         ),
         migrations.AlterField(
             model_name='produto',

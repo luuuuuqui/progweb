@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Fabricante(models.Model):
     nome = models.CharField(max_length=100)
     criado_em = models.DateTimeField(auto_now_add=True)

@@ -1,9 +1,5 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-#acima são bibliotecas padrões necessárias do Django, e abaixo nossos
-models
-from .fabricante import Fabricante
-from .categoria import Categoria
-from .produto import Produto
+from .categoria import Categoria as Categoria
+from .fabricante import Fabricante as Fabricante
+from .produto import Produto as Produto
+
+__all__ = ["Categoria", "Fabricante", "Produto"]

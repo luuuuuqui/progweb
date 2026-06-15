@@ -1,12 +1,18 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
+
 from core.models.categoria import Categoria
+
 
 def list_categoria_view(request):
     categorias = Categoria.objects.all()
-    context = {
-        'categorias': categorias
-    }
-    return render(request, template_name='categoria/categoria.html', context=context, status=200)
+    context = {"categorias": categorias}
+    return render(
+        request,
+        template_name="categoria/categoria.html",
+        context=context,
+        status=200,
+    )
+
 
 def create_categoria_view(request):
     if request.method == "POST":
@@ -14,9 +20,10 @@ def create_categoria_view(request):
         if nome:
             categoria = Categoria(nome=nome)
             categoria.save()
-        return redirect('categoria')
-        
-    return render(request, template_name='categoria/categoria-edit.html')
+        return redirect("categoria")
+
+    return render(request, template_name="categoria/categoria-edit.html")
+
 
 def edit_categoria_view(request, id):
     categoria = get_object_or_404(Categoria, id=id)
@@ -25,14 +32,17 @@ def edit_categoria_view(request, id):
         if nome:
             categoria.nome = nome
             categoria.save()
-        return redirect('categoria')
-        
-    context = {
-        'categoria': categoria
-    }
-    return render(request, template_name='categoria/categoria-edit.html', context=context)
+        return redirect("categoria")
+
+    context = {"categoria": categoria}
+    return render(
+        request,
+        template_name="categoria/categoria-edit.html",
+        context=context,
+    )
+
 
 def delete_categoria_view(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     categoria.delete()
-    return redirect('categoria')
+    return redirect("categoria")

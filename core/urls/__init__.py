@@ -1,23 +1,21 @@
 from django.urls import path
 
 from core.views import (
-    home_view,
-    favoritos_view,
-    list_produto_view,
-    edit_produto_view,
-    delete_produto_view,
-    create_produto_view,
-    details_produto_view,
-    
-    list_categoria_view,
     create_categoria_view,
-    edit_categoria_view,
-    delete_categoria_view,
-    
-    list_fabricante_view,
     create_fabricante_view,
-    edit_fabricante_view,
+    create_produto_view,
+    delete_categoria_view,
     delete_fabricante_view,
+    delete_produto_view,
+    details_produto_view,
+    edit_categoria_view,
+    edit_fabricante_view,
+    edit_produto_view,
+    favoritos_view,
+    home_view,
+    list_categoria_view,
+    list_fabricante_view,
+    list_produto_view,
 )
 
 urlpatterns = [
@@ -41,6 +39,10 @@ urlpatterns = [
     path("fabricante/", list_fabricante_view, name='fabricante'),
     path("fabricante/<int:id>", list_fabricante_view, name='fabricante'),
     path("fabricante/edit/<int:id>", edit_fabricante_view, name='edit_fabricante'),
-    path("fabricante/delete/<int:id>", delete_fabricante_view, name='delete_fabricante'),
+    path(
+        "fabricante/delete/<int:id>",
+        delete_fabricante_view,
+        name='delete_fabricante',
+    ),
     path("fabricante/create/", create_fabricante_view, name='create_fabricante'),
 ]

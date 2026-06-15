@@ -1,5 +1,7 @@
 from django.shortcuts import render
+
 from core.models.produto import Produto
+
 
 def favoritos_view(request):
     ids_str = request.GET.get('ids', '')
