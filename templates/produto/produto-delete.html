@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Excluir Produto{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="container py-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0">Excluir Produto</h3>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center mb-3 mb-md-0">
+                        {% if produto.foto %}
+                        <img src="{{ produto.foto.url }}" alt="{{ produto.nome }}" style="max-width: 100%; max-height: 260px; object-fit: contain; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                        {% else %}
+                        <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 220px; border-radius: 8px; border: 1px dashed #ced4da;">
+                            <i class="fa fa-image fa-3x"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <h4 class="mb-3">{{ produto.nome }}</h4>
+                        <p class="text-muted mb-4">Confirme a exclusão deste produto. Se ele tiver uma imagem cadastrada, o arquivo da imagem também será apagado.</p>
+
+                        <dl class="row">
+                            <dt class="col-sm-3">Preço</dt>
+                            <dd class="col-sm-9">R$ {{ produto.preco }}</dd>
+
+                            <dt class="col-sm-3">Categoria</dt>
+                            <dd class="col-sm-9">
+                                {% if produto.categoria %}
+                                {{ produto.categoria.nome }}
+                                {% else %}
+                                <span class="text-muted">Nenhuma</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-3">Fabricante</dt>
+                            <dd class="col-sm-9">
+                                {% if produto.fabricante %}
+                                {{ produto.fabricante.nome }}
+                                {% else %}
+                                <span class="text-muted">Nenhum</span>
+                                {% endif %}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-light d-flex justify-content-between">
+                <a href="{% url 'produto' %}" class="btn btn-secondary">
+                    <i class="fa fa-rotate-left"></i> Cancelar
+                </a>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Excluir Produto
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
