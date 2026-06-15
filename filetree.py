@@ -40,7 +40,7 @@ class DirectoryTreeGenerator:
         if not gitignore_path.exists():
             return []
 
-        rules = []
+        rules: list[tuple[str, bool]] = []
         for line in gitignore_path.read_text(encoding="utf-8").splitlines():
             line = line.strip()
             if not line or line.startswith("#"):

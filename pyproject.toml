@@ -4,3 +4,10 @@ target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+include = ["config", "core", "manage.py", "filetree.py"]
+exclude = [".venv", "media", "static", "**/migrations"]
+venvPath = "."
+venv = ".venv"

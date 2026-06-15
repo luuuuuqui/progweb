@@ -1,10 +1,13 @@
+from typing import Any, cast
+
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.models.categoria import Categoria
 
 
-def list_categoria_view(request):
-    categorias = Categoria.objects.all()
+def list_categoria_view(request: HttpRequest) -> HttpResponse:
+    categorias = cast(Any, Categoria.objects.all())
     context = {"categorias": categorias}
     return render(
         request,
@@ -14,7 +17,7 @@ def list_categoria_view(request):
     )
 
 
-def create_categoria_view(request):
+def create_categoria_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         nome = request.POST.get("nome")
         if nome:
@@ -25,7 +28,7 @@ def create_categoria_view(request):
     return render(request, template_name="categoria/categoria-edit.html")
 
 
-def edit_categoria_view(request, id):
+def edit_categoria_view(request: HttpRequest, id: int) -> HttpResponse:
     categoria = get_object_or_404(Categoria, id=id)
     if request.method == "POST":
         nome = request.POST.get("nome")
@@ -42,7 +45,7 @@ def edit_categoria_view(request, id):
     )
 
 
-def delete_categoria_view(request, id):
+def delete_categoria_view(request: HttpRequest, id: int) -> HttpResponse:
     categoria = get_object_or_404(Categoria, id=id)
     categoria.delete()
     return redirect("categoria")

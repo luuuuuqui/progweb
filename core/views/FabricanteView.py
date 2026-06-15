@@ -1,10 +1,13 @@
+from typing import Any, cast
+
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.models.fabricante import Fabricante
 
 
-def list_fabricante_view(request):
-    fabricantes = Fabricante.objects.all()
+def list_fabricante_view(request: HttpRequest) -> HttpResponse:
+    fabricantes = cast(Any, Fabricante.objects.all())
     context = {"fabricantes": fabricantes}
     return render(
         request,
@@ -14,7 +17,7 @@ def list_fabricante_view(request):
     )
 
 
-def create_fabricante_view(request):
+def create_fabricante_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         nome = request.POST.get("nome")
         if nome:
@@ -25,7 +28,7 @@ def create_fabricante_view(request):
     return render(request, template_name="fabricante/fabricante-edit.html")
 
 
-def edit_fabricante_view(request, id):
+def edit_fabricante_view(request: HttpRequest, id: int) -> HttpResponse:
     fabricante = get_object_or_404(Fabricante, id=id)
     if request.method == "POST":
         nome = request.POST.get("nome")
@@ -42,7 +45,7 @@ def edit_fabricante_view(request, id):
     )
 
 
-def delete_fabricante_view(request, id):
+def delete_fabricante_view(request: HttpRequest, id: int) -> HttpResponse:
     fabricante = get_object_or_404(Fabricante, id=id)
     fabricante.delete()
     return redirect("fabricante")
