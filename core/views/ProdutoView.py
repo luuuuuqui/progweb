@@ -89,6 +89,9 @@ def edit_produto_view(request: HttpRequest, id: int) -> HttpResponse:
 
 def delete_produto_view(request: HttpRequest, id: int) -> HttpResponse:
     produto = get_object_or_404(Produto, id=id)
+    if produto.foto:
+        produto.foto.delete(save=False)
+
     produto.delete()
     return redirect("produto")
 
