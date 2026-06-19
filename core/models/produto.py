@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from decimal import Decimal
 from typing import Any
 
@@ -21,6 +22,12 @@ class Produto(models.Model):
     )
     preco: models.DecimalField[Decimal, Decimal] = models.DecimalField(
         max_digits=8, decimal_places=2
+    )
+    criado_em: models.DateTimeField[datetime, datetime] = models.DateTimeField(
+        auto_now_add=True
+    )
+    alterado_em: models.DateTimeField[datetime, datetime] = models.DateTimeField(
+        auto_now=True
     )
 
     categoria: models.ForeignKey[Categoria | None, Categoria | None] = (

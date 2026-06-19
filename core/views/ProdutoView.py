@@ -11,18 +11,33 @@ from core.models.fabricante import Fabricante
 from core.models.produto import Produto
 
 
-def list_produto_view(request: HttpRequest) -> HttpResponse:
+def list_produto_view(request: HttpRequest, id: int | None = None) -> HttpResponse:
     produto = request.GET.get("produto")
+    destaque = request.GET.get("destaque")
+    promocao = request.GET.get("promocao")
     categoria = request.GET.get("categoria")
+    fabricante = request.GET.get("fabricante")
     dias = request.GET.get("dias")
 
     produtos = cast(Any, Produto.objects.all())
 
+    if id is not None:
+        produtos = produtos.filter(id=id)
+
     if produto is not None:
         produtos = produtos.filter(nome__contains=produto)
 
+    if destaque is not None:
+        produtos = produtos.filter(destaque=destaque)
+
+    if promocao is not None:
+        produtos = produtos.filter(promocao=promocao)
+
     if categoria is not None:
         produtos = produtos.filter(categoria__nome=categoria)
+
+    if fabricante is not None:
+        produtos = produtos.filter(fabricante__nome=fabricante)
 
     if dias is not None:
         now = timezone.now() - timedelta(days=int(dias))
