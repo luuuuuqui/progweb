@@ -43,8 +43,6 @@ def list_produto_view(request: HttpRequest, id: int | None = None) -> HttpRespon
         now = timezone.now() - timedelta(days=int(dias))
         produtos = produtos.filter(criado_em__gte=now)
 
-    print(produtos)
-
     context = {"produtos": produtos}
     return render(
         request, template_name="produto/produto.html", context=context, status=200

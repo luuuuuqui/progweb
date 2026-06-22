@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Editar Produto{% endblock %}
+{% block title %}{% if produto %}Editar Produto{% else %}Novo Produto{% endif %}{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
@@ -14,7 +14,7 @@
             {% if produto %}
             <input type="hidden" value="{{produto.id}}" name="id">
             {% endif %}
-            
+
             <div class="form-group row">
                 <label for="Produto" class="col-sm-2 col-form-label font-weight-bold">Nome do Produto</label>
                 <div class="col-sm-10">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="form-group row">
-                <label for="preco" class="col-sm-2 col-form-label font-weight-bold">Preço (R$)</label>
+                <label for="preco" class="col-sm-2 col-form-label font-weight-bold">Pre&ccedil;o (R$)</label>
                 <div class="col-sm-10">
                     <input type="number" step="0.01" class="form-control" id="preco" value="{{produto.preco|default:'0.00'}}" name="preco" required placeholder="0.00">
                 </div>
@@ -58,13 +58,13 @@
                     </div>
                     <div class="form-check form-check-inline">
                         <input type="checkbox" class="form-check-input" id="promocao" name="promocao" {% if produto.promocao %}checked{% endif %}>
-                        <label class="form-check-label" for="promocao">Promoção</label>
+                        <label class="form-check-label" for="promocao">Promo&ccedil;&atilde;o</label>
                     </div>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="msgPromocao" class="col-sm-2 col-form-label font-weight-bold">Msg Promoção</label>
+                <label for="msgPromocao" class="col-sm-2 col-form-label font-weight-bold">Msg Promo&ccedil;&atilde;o</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="msgPromocao" value="{{produto.msg_promocao|default:''}}" name="msgPromocao" placeholder="Ex: 20% de Desconto!">
                 </div>

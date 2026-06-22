@@ -25,7 +25,7 @@
                     <div class="col-md-3 font-weight-bold">ID do Produto:</div>
                     <div class="col-md-9">{{ produto.id }}</div>
                 </div>
-                
+
                 <div class="row mb-3">
                     <div class="col-md-3 font-weight-bold">Categoria:</div>
                     <div class="col-md-9">
@@ -55,17 +55,17 @@
                             <span class="badge badge-success py-1 px-2 mr-2"><i class="fa fa-star"></i> Destaque</span>
                         {% endif %}
                         {% if produto.promocao %}
-                            <span class="badge badge-warning py-1 px-2"><i class="fa fa-tag"></i> Em Promoção</span>
+                            <span class="badge badge-warning py-1 px-2"><i class="fa fa-tag"></i> Em Promo&ccedil;&atilde;o</span>
                         {% endif %}
                         {% if not produto.destaque and not produto.promocao %}
-                            <span class="text-muted">Padrão</span>
+                            <span class="text-muted">Padr&atilde;o</span>
                         {% endif %}
                     </div>
                 </div>
 
                 {% if produto.promocao and produto.msg_promocao %}
                 <div class="row mb-3">
-                    <div class="col-md-3 font-weight-bold">Mensagem de Promoção:</div>
+                    <div class="col-md-3 font-weight-bold">Mensagem de Promo&ccedil;&atilde;o:</div>
                     <div class="col-md-9 text-danger font-italic font-weight-bold">
                         {{ produto.msg_promocao }}
                     </div>
