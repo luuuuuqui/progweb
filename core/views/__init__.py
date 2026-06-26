@@ -19,6 +19,7 @@ from .ProdutoView import (
     edit_produto_view,
     list_produto_view,
 )
+from .UsuarioView import list_usuario_view
 
 __all__ = [
     'home_view',
@@ -38,4 +39,6 @@ __all__ = [
     'create_fabricante_view',
     'edit_fabricante_view',
     'delete_fabricante_view',
+
+    'list_usuario_view',
 ]

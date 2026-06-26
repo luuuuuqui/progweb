@@ -16,6 +16,7 @@ from core.views import (
     list_categoria_view,
     list_fabricante_view,
     list_produto_view,
+    list_usuario_view,
 )
 
 urlpatterns = [
@@ -45,4 +46,8 @@ urlpatterns = [
         name='delete_fabricante',
     ),
     path("fabricante/create/", create_fabricante_view, name='create_fabricante'),
+
+    # Usuario
+    path("usuario/", list_usuario_view, name='usuario'),
+    path("usuario/<int:id>", list_usuario_view, name='usuario'),
 ]
