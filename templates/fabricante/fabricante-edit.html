@@ -12,14 +12,13 @@
         <h2 class="mb-4">{% if fabricante %}Editar Fabricante: {{ fabricante.nome }}{% else %}Novo Fabricante{% endif %}</h2>
         <form method="POST" action="" class="card p-4 shadow-sm">
             {% csrf_token %}
-            {% if fabricante %}
-            <input type="hidden" value="{{fabricante.id}}" name="id">
-            {% endif %}
-            
             <div class="form-group row">
-                <label for="nome" class="col-sm-2 col-form-label font-weight-bold">Nome do Fabricante</label>
+                <label for="{{ form.nome.id_for_label }}" class="col-sm-2 col-form-label font-weight-bold">Nome do Fabricante</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nome" value="{{fabricante.nome|default:''}}" name="nome" required placeholder="Digite o nome do fabricante">
+                    {{ form.nome }}
+                    {% for error in form.nome.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                    {% endfor %}
                 </div>
             </div>
 

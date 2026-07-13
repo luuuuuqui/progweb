@@ -2,6 +2,7 @@ from typing import Any, cast
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from core.models.categoria import Categoria
 
@@ -45,6 +46,7 @@ def edit_categoria_view(request: HttpRequest, id: int) -> HttpResponse:
     )
 
 
+@require_POST
 def delete_categoria_view(request: HttpRequest, id: int) -> HttpResponse:
     categoria = get_object_or_404(Categoria, id=id)
     categoria.delete()

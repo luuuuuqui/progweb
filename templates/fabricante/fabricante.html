@@ -43,9 +43,12 @@
                                     <a href="{% url 'edit_fabricante' fab.id %}" class="btn btn-sm btn-warning text-white mr-1 shadow-sm">
                                         <i class="fa fa-edit"></i> Editar
                                     </a>
-                                    <a href="{% url 'delete_fabricante' fab.id %}" class="btn btn-sm btn-danger shadow-sm" onclick="return confirm('Tem certeza que deseja apagar o fabricante {{ fab.nome }}?');">
-                                        <i class="fa fa-trash"></i> Apagar
-                                    </a>
+                                    <form method="POST" action="{% url 'delete_fabricante' fab.id %}" class="d-inline" onsubmit="return confirm('Tem certeza que deseja apagar o fabricante {{ fab.nome }}?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-danger shadow-sm">
+                                            <i class="fa fa-trash"></i> Apagar
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             {% empty %}
