@@ -11,6 +11,7 @@ from core.views import (
     edit_categoria_view,
     edit_fabricante_view,
     edit_produto_view,
+    edit_usuario_view,
     favoritos_view,
     home_view,
     list_categoria_view,
@@ -50,4 +51,5 @@ urlpatterns = [
     # Usuario
     path("usuario/", list_usuario_view, name='usuario'),
     path("usuario/<int:id>", list_usuario_view, name='usuario'),
+    path("usuario/edit/", edit_usuario_view, name='edit_usuario'),
 ]
