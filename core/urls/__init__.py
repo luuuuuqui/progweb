@@ -18,6 +18,8 @@ from core.views import (
     list_fabricante_view,
     list_produto_view,
     list_usuario_view,
+    login_view,
+    register_view,
 )
 
 urlpatterns = [
@@ -52,4 +54,8 @@ urlpatterns = [
     path("usuario/", list_usuario_view, name='usuario'),
     path("usuario/<int:id>", list_usuario_view, name='usuario'),
     path("usuario/edit/", edit_usuario_view, name='edit_usuario'),
+
+    #login
+    path('login', login_view, name='login'),
+    path('register', register_view, name='register'),
 ]
