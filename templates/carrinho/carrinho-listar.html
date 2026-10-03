@@ -1,0 +1,83 @@
+{% extends "base.html" %} {% load static %} {% block title %}Carrinho{% endblock %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block content %}
+<div id="content">
+    <div class="container py-4">
+        <div class="alert alert-info">
+            <h3>{% if confirmando %}Confirmar compra{% else %}Carrinho de compras{% endif %}</h3>
+        </div>
+        {% if itens %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens %}
+                    <tr>
+                        <td class="align-middle">
+                            {{ item.nome_produto }} {% if not item.produto %}<span class="badge badge-warning">Indisponível</span
+                            >{% endif %}
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex align-items-center" style="gap: 0.5rem">
+                                <form method="POST" action="{% url 'diminuir_carrinhoitem' item.id %}" class="m-0">
+                                    {% csrf_token %}
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-outline-secondary"
+                                        aria-label="Diminuir quantidade de {{ item.nome_produto }}"
+                                    >
+                                        −
+                                    </button>
+                                </form>
+                                <span>{{ item.quantidade }}</span>
+                                {% if item.produto %}
+                                <form method="POST" action="{% url 'adicionar_carrinhoitem' item.id %}" class="m-0">
+                                    {% csrf_token %}
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-outline-secondary"
+                                        aria-label="Adicionar unidade de {{ item.nome_produto }}"
+                                    >
+                                        +
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="align-middle text-nowrap">R$ {{ item.preco|floatformat:2 }}</td>
+                        <td class="align-middle text-nowrap">R$ {{ item.total|floatformat:2 }}</td>
+                        <td class="align-middle">
+                            <form method="POST" action="{% url 'remover_carrinhoitem' item.id %}" class="m-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <h5 class="mt-4">Total: R$ {{ carrinho.total|floatformat:2 }}</h5>
+        <p class="text-muted">Ao diminuir um item com uma unidade, ele será removido do carrinho.</p>
+        <div class="d-flex flex-wrap align-items-center mt-4" style="gap: 0.5rem">
+            <a href="{% url 'home' %}" class="btn btn-secondary">Voltar à loja</a>
+            <form method="POST" action="{% url 'confirmar_carrinho' %}" class="m-0">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Finalizar compra</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert">Seu carrinho está vazio.</div>
+        <a href="{% url 'home' %}" class="btn btn-primary">Ir à loja</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

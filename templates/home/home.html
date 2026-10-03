@@ -1,21 +1,15 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %}Início{% endblock %}
-
-{% block styles %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block title %}Início{% endblock %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block content %}
 <div id="content">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6 offset-sm-0">
-                <form action={% url 'home' %} method="GET" class="m-0">
+                <form action="{% url 'home' %}" method="GET" class="m-0">
                     <h3>Buscar produtos</h3>
                     <div class="form-row">
                         <div class="col form-group">
-                            <input type="text" class="form-control" name="produto" placeholder="nome do produto">
+                            <input type="text" class="form-control" name="produto" placeholder="nome do produto" />
                         </div>
                     </div>
                     <div class="form-row">
@@ -33,14 +27,38 @@
                 <div class="card w-100">
                     <div class="row no-gutters align-items-center">
                         <div class="col-4">
-                            <div class="image-product" style="background-image: url('{% if prod.foto %}{{ prod.foto.url }}{% endif %}');"></div>
+                            <div
+                                class="image-product"
+                                style="
+                                    background-image: url(&quot;{% if prod.foto %}{{ prod.foto.url }}{% endif %}&quot;);
+                                "
+                            ></div>
                         </div>
                         <div class="col-8">
                             <div class="card-body">
                                 <h5 class="card-title">{{prod.nome}}</h5>
-                                <div class="mt-2">
-                                    <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary"><i class="fa fa-search"></i> Ver</a>
-                                    <button class="btn btn-warning btn-favorite" data-id="{{ prod.id }}"><i class="fa fa-heart"></i> <span class="fav-text">Favoritar</span></button>
+                                <p class="card-text">R$ {{ prod.preco|floatformat:2 }}</p>
+                                <div class="mt-2 d-flex flex-wrap align-items-center" style="gap: 0.5rem">
+                                    <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary"
+                                        ><i class="fa fa-search"></i> Ver</a
+                                    >
+                                    <form method="POST" action="{% url 'favoritar_produto' prod.id %}" class="m-0">
+                                        {% csrf_token %}
+                                        <button
+                                            type="submit"
+                                            class="btn {% if prod.id in favoritos_ids %}btn-danger{% else %}btn-warning{% endif %}"
+                                            aria-pressed="{% if prod.id in favoritos_ids %}true{% else %}false{% endif %}"
+                                        >
+                                            <i class="fa fa-heart"></i>
+                                            {% if prod.id in favoritos_ids %}Favoritado{% else %}Favoritar{% endif %}
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{% url 'create_carrinhoitem' prod.id %}" class="m-0">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fa fa-shopping-cart"></i> Comprar
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -51,8 +69,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% load static %} {% block title %}Compra confirmada{% endblock %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block content %}
+<div id="content">
+    <div class="container py-4">
+        <div class="alert alert-info">
+            <h3>Compra confirmada</h3>
+            <p class="mb-0">Usuário: {{ carrinho.user }}</p>
+        </div>
+        <p>Pedido número: {{ carrinho.id }}</p>
+        <p>Confirmado em: {{ carrinho.confirmado_em|date:"d/m/Y H:i" }}</p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens %}
+                    <tr>
+                        <td>{{ item.nome_produto }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td class="text-nowrap">R$ {{ item.preco|floatformat:2 }}</td>
+                        <td class="text-nowrap">R$ {{ item.total|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <h5 class="mt-4">Total: R$ {{ carrinho.total|floatformat:2 }}</h5>
+        <a href="{% url 'home' %}" class="btn btn-secondary mt-4">Voltar à loja</a>
+    </div>
+</div>
+{% endblock %}

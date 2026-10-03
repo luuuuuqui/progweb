@@ -1,18 +1,12 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %}Favoritos{% endblock %}
-
-{% block styles %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block title %}Favoritos{% endblock %} {% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block content %}
 <div id="content">
     <div class="container mt-5">
         <div class="row">
             <div class="col-sm-12">
                 <h3>Meus Favoritos</h3>
-                <hr>
+                <hr />
             </div>
         </div>
         {% if produtos %}
@@ -23,14 +17,34 @@
                 <div class="card w-100">
                     <div class="row no-gutters align-items-center">
                         <div class="col-4">
-                            <div class="image-product" style="background-image: url('{% if prod.foto %}{{ prod.foto.url }}{% endif %}');"></div>
+                            <div
+                                class="image-product"
+                                style="
+                                    background-image: url(&quot;{% if prod.foto %}{{ prod.foto.url }}{% endif %}&quot;);
+                                "
+                            ></div>
                         </div>
                         <div class="col-8">
                             <div class="card-body">
                                 <h5 class="card-title">{{prod.nome}}</h5>
-                                <div class="mt-2">
-                                    <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary"><i class="fa fa-search"></i> Ver</a>
-                                    <button class="btn btn-warning btn-favorite" data-id="{{ prod.id }}"><i class="fa fa-heart"></i> <span class="fav-text">Favoritar</span></button>
+                                <p class="card-text">R$ {{ prod.preco|floatformat:2 }}</p>
+                                <div class="mt-2 d-flex flex-wrap align-items-center" style="gap: 0.5rem">
+                                    <a href="{% url 'details_produto' prod.id %}" class="btn btn-primary"
+                                        ><i class="fa fa-search"></i> Ver</a
+                                    >
+                                    <form method="POST" action="{% url 'favoritar_produto' prod.id %}" class="m-0">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="origem" value="favoritos" />
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fa fa-heart"></i> Remover favorito
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{% url 'create_carrinhoitem' prod.id %}" class="m-0">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fa fa-shopping-cart"></i> Comprar
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -44,8 +58,4 @@
         {% endif %}
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
