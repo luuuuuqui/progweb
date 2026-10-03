@@ -1,5 +1,6 @@
 from typing import Any, cast
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
@@ -22,6 +23,7 @@ def list_usuario_view(request: HttpRequest, id: int | None = None) -> HttpRespon
     )
 
 
+@login_required
 def edit_usuario_view(request: HttpRequest) -> HttpResponse:
     usuario = get_object_or_404(Usuario, user=request.user)
     message: dict[str, str] | None = None
@@ -29,11 +31,13 @@ def edit_usuario_view(request: HttpRequest) -> HttpResponse:
 
     if request.method == "POST":
         usuarioForm = UserUsuarioForm(request.POST, instance=usuario)
-        userForm = UserForm(request.POST, instance=request.user)
+        userForm = UserForm(request.POST, instance=usuario.user)
 
-        verify_email = Usuario.objects.filter(
-            user__email=request.POST.get("email", "")
-        ).exclude(user__id=request.user.id).first()
+        verify_email = (
+            Usuario.objects.filter(user__email=request.POST.get("email", ""))
+            .exclude(user=usuario.user)
+            .first()
+        )
         email_unused = verify_email is None
 
         if usuarioForm.is_valid() and userForm.is_valid() and email_unused:
@@ -48,7 +52,7 @@ def edit_usuario_view(request: HttpRequest) -> HttpResponse:
                     message = {"type": "warning", "text": "E-mail já usado"}
     else:
         usuarioForm = UserUsuarioForm(instance=usuario)
-        userForm = UserForm(instance=request.user)
+        userForm = UserForm(instance=usuario.user)
 
     context = {
         "usuarioForm": usuarioForm,
