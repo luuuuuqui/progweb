@@ -3,3 +3,4 @@ django-stubs==6.0.5
 Pillow==12.2.0
 pyright==1.1.410
 ruff==0.15.17
+python-dotenv==1.2.4

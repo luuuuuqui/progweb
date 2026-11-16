@@ -21,17 +21,25 @@ Este é um projeto Django criado para fins de aprendizado e testes. É um reposi
    pip install -r requirements.txt
    ```
 
-4. Execute as migrações:
+4. Copie o arquivo de variáveis de ambiente:
+   ```bash
+   cp .env.example .env
+   python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+   ```
+   Preencha `SECRET_KEY` no `.env` com a chave gerada. O arquivo é carregado por
+   `python-dotenv`; variáveis definidas no ambiente têm prioridade. Não versione o `.env`.
+
+5. Execute as migrações:
    ```bash
    python manage.py migrate
    ```
 
-5. Crie um superusuário (opcional):
+6. Crie um superusuário (opcional):
    ```bash
    python manage.py createsuperuser
    ```
 
-6. Execute o servidor de desenvolvimento:
+7. Execute o servidor de desenvolvimento:
    ```bash
    python manage.py runserver
    ```
