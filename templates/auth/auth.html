@@ -23,6 +23,9 @@
                 <a href="{{ link_href }}" style="display: block; text-align: center; margin-bottom: 20px"
                     >{{ link_text }}</a
                 >
+                {% if title == "Login" %}
+                <a href="{% url 'recovery' %}" class="d-block text-center mb-3">Esqueci minha senha</a>
+                {% endif %}
                 <button type="submit" class="btn btn-primary">{{ button_text }}</button>
             </form>
         </div>

@@ -1,4 +1,5 @@
-from django.urls import path
+from django.contrib.auth import views as auth_views
+from django.urls import path, reverse_lazy
 
 from core.views import (
     alterar_quantidade_view,
@@ -89,6 +90,51 @@ urlpatterns = [
     path("usuario/", list_usuario_view, name="usuario"),
     path("usuario/<int:id>", list_usuario_view, name="usuario"),
     path("usuario/edit/", edit_usuario_view, name="edit_usuario"),
+    # Recuperação de senha
+    path(
+        "recovery",
+        auth_views.PasswordResetView.as_view(
+            template_name="auth/password-reset.html",
+            email_template_name="auth/recovery.txt",
+            html_email_template_name="auth/recovery.html",
+            subject_template_name="auth/recovery-subject.txt",
+            success_url=reverse_lazy("password_reset_done"),
+            extra_context={"title": "Recuperar senha", "button_text": "Recuperar"},
+        ),
+        name="recovery",
+    ),
+    path(
+        "recovery/done/",
+        auth_views.PasswordResetDoneView.as_view(
+            template_name="auth/password-reset.html",
+            extra_context={
+                "title": "Recuperar senha",
+                "notice": "Se o e-mail estiver cadastrado em uma conta ativa, "
+                "você receberá um link para recuperar a senha.",
+            },
+        ),
+        name="password_reset_done",
+    ),
+    path(
+        "change-password/<uidb64>/<token>/",
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name="auth/password-reset.html",
+            success_url=reverse_lazy("password_reset_complete"),
+            extra_context={"title": "Alterar senha", "button_text": "Alterar"},
+        ),
+        name="password_reset_confirm",
+    ),
+    path(
+        "change-password/done/",
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name="auth/password-reset.html",
+            extra_context={
+                "title": "Alterar senha",
+                "notice": "Senha alterada com sucesso! Entre com sua nova senha.",
+            },
+        ),
+        name="password_reset_complete",
+    ),
     # login
     path("login", login_view, name="login"),
     path("logout", logout_view, name="logout"),

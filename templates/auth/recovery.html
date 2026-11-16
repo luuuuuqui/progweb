@@ -1,0 +1,6 @@
+<h3>Recuperação de senha</h3>
+<p>Olá, {{ user.get_username }}.</p>
+<p>Recebemos uma solicitação para recuperar sua senha.</p>
+<p><a href="{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}">Escolher uma nova senha</a></p>
+<p>O link expira em uma hora e só pode ser usado uma vez.</p>
+<p>Se você não solicitou a recuperação, ignore esta mensagem.</p>
