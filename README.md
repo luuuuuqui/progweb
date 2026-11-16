@@ -1,13 +1,39 @@
-# Django Study Project
+# Estudos de Programação Web
 
-Este é um projeto Django criado para fins de aprendizado e testes. É um repositório privado usado como cobaia para experimentar funcionalidades do Django.
+Repositório de estudos de programação web com Python e Django. O projeto reúne
+exercícios e implementações feitas durante o aprendizado, usando uma aplicação
+de loja para praticar os recursos do framework.
 
-## Configuração do Ambiente
+O objetivo é estudar o desenvolvimento de uma aplicação web: rotas, views,
+templates, formulários, persistência de dados, autenticação e integração com
+serviços de e-mail. O código evolui conforme novos conteúdos são estudados.
+
+## O que já foi desenvolvido
+
+- Cadastro, listagem, edição e exclusão de produtos, categorias e fabricantes.
+- Upload de imagens de produtos e busca por nome no catálogo.
+- Registro, login, logout e edição do perfil de usuário.
+- Recuperação de senha por e-mail.
+- Carrinho com controle de quantidade e confirmação de compra.
+- Produtos favoritos vinculados à conta do usuário.
+- Administração de dados pelo Django Admin.
+
+## Tecnologias
+
+- Python e Django 6.
+- SQLite para persistência local.
+- HTML, CSS e templates do Django para a interface.
+- Pillow para imagens e python-dotenv para carregar o `.env`.
+- Ruff, Pyright e testes do Django para verificar o código.
+
+## Como executar localmente
+
+Use Python 3.12 ou superior, compatível com o Django 6.
 
 1. Clone o repositório:
    ```bash
-   git clone <url-do-repo>
-   cd django-study
+   git clone https://github.com/luuuuuqui/progweb.git
+   cd progweb
    ```
 
 2. Crie um ambiente virtual:
@@ -44,13 +70,12 @@ Este é um projeto Django criado para fins de aprendizado e testes. É um reposi
    python manage.py runserver
    ```
 
-## Recuperação de Senha e E-mail
+## Recuperação de senha e e-mail
 
 O link "Esqueci minha senha" no login abre `/recovery`. O Django envia uma
 mensagem com versões em texto e HTML. O link permite definir e confirmar uma
 nova senha, expira em uma hora e é invalidado após a alteração. A resposta da
-solicitação não revela se uma conta existe. O campo `Usuario.token` do material
-não é necessário: o fluxo usa os tokens nativos do Django.
+solicitação não revela se uma conta existe. O fluxo usa os tokens nativos do Django.
 
 Para enviar pelo Gmail:
 
@@ -73,23 +98,28 @@ registradas pelo Django no terminal; confira esse registro se a mensagem não
 chegar. O domínio e o protocolo do link vêm da requisição; mantenha
 `ALLOWED_HOSTS` restrito aos endereços usados pelo projeto.
 
-Execute os testes com `python manage.py test`. Eles usam uma caixa de saída em
-memória e não enviam mensagens reais.
+## Verificações
 
-## Estrutura do Projeto
+Com o ambiente virtual ativado:
 
-- `config/`: Configurações do Django
-- `core/`: Aplicação principal com modelos, views, etc.
-- `templates/`: Templates HTML
-- `media/`: Arquivos de mídia (fotos, etc.)
-- `requirements.txt`: Dependências Python
+```bash
+python manage.py check
+python manage.py test
+ruff check .
+pyright
+```
 
-## Funcionalidades
+Os testes de e-mail usam uma caixa de saída em memória e não enviam mensagens reais.
 
-- Modelos: Categoria, Fabricante, Produto
-- Upload de imagens para produtos
-- Interface administrativa do Django
+## Estrutura do projeto
 
-## Notas
+- `config/`: Configurações e rotas principais do Django.
+- `core/`: Models, formulários, views, rotas, migrations e testes da aplicação.
+- `templates/`: Páginas HTML e modelos de e-mail.
+- `static/`: Arquivos estáticos, como folhas de estilo.
+- `media/`: Imagens enviadas durante o uso, fora do versionamento.
+- `.env.example`: Exemplo das variáveis de ambiente necessárias.
+- `requirements.txt`: Dependências do projeto.
+- `pyproject.toml`: Configurações do Ruff e do Pyright.
 
-Este projeto é usado apenas para aprendizado e não deve ser usado em produção.
+Este é um projeto de estudo, sem preparação para uso em produção.
